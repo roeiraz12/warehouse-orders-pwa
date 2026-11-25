@@ -2,7 +2,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// GitHub Pages demo build: VITE_BASE=/warehouse-orders-pwa/ (defaults to / everywhere else).
+const base = process.env.VITE_BASE || '/';
+
 export default defineConfig({
+  base,
   plugins: [
     react(),
     VitePWA({
@@ -17,6 +21,8 @@ export default defineConfig({
         short_name: 'הזמנות',
         lang: 'he',
         dir: 'rtl',
+        start_url: base,
+        scope: base,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#f8fafc',
@@ -29,5 +35,6 @@ export default defineConfig({
     // dev:live — the app calls /api, forwarded to the local API server (npm run server).
     proxy: { '/api': 'http://localhost:8787' },
   },
-  test: { environment: 'node' },
+  // Business-day rules run in Israel time; pin the tests to it so CI (UTC) matches a local run.
+  test: { environment: 'node', env: { TZ: 'Asia/Jerusalem' } },
 });

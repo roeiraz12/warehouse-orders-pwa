@@ -37,7 +37,7 @@ export default function App() {
   }, [load]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || undefined}>
       <ScrollToTop />
       <ToastHost />
       <ConnectionBanner />
