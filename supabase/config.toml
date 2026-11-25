@@ -1,0 +1,5 @@
+project_id = "your-project-ref"
+
+[functions.api]
+# The function does its own auth (shared business code), so phones do not need a Supabase JWT.
+verify_jwt = false
